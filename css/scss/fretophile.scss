@@ -1,0 +1,100 @@
+body{
+  	background-color: #FFF;
+  	color: #000;
+  	font-family: "verdana";
+  	font-style: normal;
+  	margin: 0;
+  	padding: 0;
+  	overflow-y: scroll;
+}
+h1, h2, h3, h4, h5, h6 {
+
+}
+
+div{
+	position:relative;
+}
+
+a {
+	color:#5367ae;
+	text-decoration: none;
+	&:hover, &:focus, &:active, &:focus, &:active {
+
+	}
+}
+
+img, a img, small, abbr, acronym, blockquote, cite, em, strong, form, fieldset, legend, label, input, select, option, textarea, input:focus, select:focus, option:focus, textarea:focus, #header, #content, #sidebar, #navigation, #footer, .bold, .italic, .hidden, .offset, .highlight, .tiny, .error, .abbr {
+
+}
+
+.container{
+	margin: 0 auto;
+	width:990px;
+}
+
+#header{
+	background-color: #8a8a8a;
+	height:50px;
+}
+
+#footer{
+	background-color:#2a2525;
+	height:125px;
+	bottom:0;
+}
+
+
+#logo{
+	background: url('/images/fretophile_sprite.png') no-repeat -4px -3px; width: 124px; height: 38px;
+	width: 124px; height: 38px;
+	float:left;
+	position:relative;
+	left: 10px;
+	top:6px;
+}
+
+#content{
+	min-height:400px;
+}
+
+.twocol-container{
+	width:100%;
+	.showcase-container{
+		width:70%;
+		.showcase-header{
+			width:100%;
+			float:left;
+			.showcase-title{
+				float:left;
+				h3{
+					line-height:0.1em;					
+				}
+				p{
+					line-height:0.3em;
+				}
+			}
+		}
+		.showcase-status{
+			float:right;
+			top:9px;
+			.forsale{
+				float:left;
+				background: url('/images/fretophile_sprite.png') no-repeat -5px -46px; width: 76px; height: 22px;
+			}
+			a{
+				float:left;
+				line-height:1.2em;
+			}
+		}
+	}
+	.sidebar-container{
+		width:30%;
+	}
+}
+
+.pikachoose {
+	position:relative;
+	width: 520px; 
+	margin: 0 auto;
+	a{color:white;}
+}
