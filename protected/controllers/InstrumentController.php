@@ -140,6 +140,23 @@ class InstrumentController extends Controller
 	        	$this->render('error', $error);
 	    }
 	}
+	
+	public function loadModel($id)
+     {
+        $model=Instrument::model()->findByPk((int)$id);
+         if($model===null)
+             throw new CHttpException(404,'The requested page does not exist.');
+         return $model;
+     }
+	 
+	public function actionDetail()
+	{
+		$this->layout = 'instrumentdetail2column';
+		$id = Yii::app()->getRequest()->getQuery('id');		
+		$model = $this->loadModel($id);
+		$this->render('instrumentDetail',array('model'=>$model));	 
+	    
+	}
 
 
 }

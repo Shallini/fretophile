@@ -1,23 +1,9 @@
 <?php
 //ob_start();
-class Tags extends CActiveRecord
+class TagsLookup extends CActiveRecord
 {
 	
-	public $maxTags=20;
 	
-	protected function renderContent()
-	{ echo 'jjj';
-		/* $tags=Tag::model()->findTagWeights($this->maxTags);
-
-		foreach($tags as $tag=>$weight)
-		{
-			$link=CHtml::link(CHtml::encode($tag), array('post/index','tag'=>$tag));
-			echo CHtml::tag('span', array(
-				'class'=>'tag',
-				'style'=>"font-size:{$weight}pt",
-			), $link)."\n";
-		} */
-	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
@@ -32,7 +18,7 @@ class Tags extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{tags}}';
+		return '{{tag_lookup}}';
 	}
 
 	/**

@@ -20,8 +20,7 @@
         <div class="middle_container">
             <div class="inside">
             	<?php echo $content; ?>
-                </div>
-                </div>
+               
                 <div class="column_three">
                 	<div class="advertisement"><img src="<?php echo Yii::app()->request->baseUrl; ?>/assets/images/advertisement2.jpg" width="280" height="245" /></div>
                     <div class="fender_custom_strat">
@@ -72,6 +71,7 @@
                 
                 </div>
             </div>
-        
+         </div>
+                </div>
 	
 <?php $this->endContent(); ?>

@@ -56,7 +56,7 @@ class Instrument extends CActiveRecord
 	  // class name for the relations automatically generated below.
 		return array(
 		  'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-		  'posts'=>array(self::BELONGS_TO, 'Tags', 'item_id'),
+		  'items'=> array(self::BELONGS_TO, 'TagsLookup', 'item_id'),
 		  /* 'posts'=>array(self::HAS_MANY, 'Post', 'author_id',
                             'order'=>'posts.create_time DESC',
                             'with'=>'categories'), */
