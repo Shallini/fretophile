@@ -98,7 +98,7 @@ ul, li{
 /*__________Footer___________*/
 
 #footer{
-	width:100%; height:127px; float:left; background:#2a2525;
+	width:100%; height:130px; float:left; background:url(../assets/images/footer_bg.png) repeat-x 0 0;
 }
 
 #footer .footer_links{
@@ -153,7 +153,7 @@ ul, li{
 }
 
 .top_bar .user_panel{
-	width:160px; float:left; position: absolute; right:0; top:12px; 
+	width:160px; float:left; position: absolute; right:0; /**top:12px**/; 
 }
 
 .top_bar .user_panel .user_img{
@@ -238,24 +238,23 @@ ul, li{
 }
 
 .middle_container .middle_left .tags ul.tags_listing{
-	width:100%; float:left;
+	float: left;
+    width: 206px;
 }
 
 .middle_container .middle_left .tags ul.tags_listing li{
-	float:left; margin:0 12px 5px 0;
+	float:none; margin:0 0 5px 0;
 } 
 
 .middle_container .middle_left .tags ul.tags_listing li a{
-	background:#ffc775; padding:0 10px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; text-decoration:none; line-height:16px; height:16px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; -khtml-border-radius:5px;
+	background:url(../assets/images/features_spot.png) no-repeat left 4px; padding:0 14px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; text-decoration:none; line-height:16px;
 } 
-
-
 
 
 
 
 .middle_container .middle_right{
-	width:300px; float:right; border-top:1px solid blue;
+	width:300px; float:right; border-top:1px solid blue;  margin-top: 8px;
 }
 
 .middle_container .middle_right .advertisement{
@@ -297,6 +296,14 @@ ul, li{
 .middle_container .middle_right .similar_instruments .similar_instruments_description h4{
 	font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#3B71CA; font-weight:normal; margin:0 0 4px 0;
 }
+.middle_container .middle_right .similar_instruments .similar_instruments_description h4 a{
+	font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#3B71CA; font-weight:normal; margin:0 0 4px 0; text-decoration: none;
+}
+.middle_container .middle_right .similar_instruments .similar_instruments_description h4 a{
+	font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#3B71CA; font-weight:normal; margin:0 0 4px 0; text-decoration: none;
+}
+
+.middle_container .middle_right .similar_instruments .similar_instruments_description h4 a:hover{text-decoration:underline;}
 
 .middle_container .middle_right .similar_instruments .similar_instruments_description p{
 	font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333;
@@ -323,7 +330,7 @@ ul, li{
 }
 
 .column_first ul.brand_listing li h3{
-	font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#e09107; margin:2px 0 8px 0; font-weight:bold;
+	font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#e09107; margin:2px 0 8px 0; font-weight:normal;
 }
 
 .column_first ul.brand_listing ul{
@@ -340,7 +347,8 @@ ul, li{
 
 
 
-
+.con_seller_link{float:left; font-size:12px; color:#333333; text-decoration:none;}
+.con_seller_link:hover{text-decoration:underline;}
 .column_second{
 	width:490px; float:left; margin:0 0 0 16px; 
 }
@@ -354,11 +362,11 @@ ul, li{
 }
 
 .column_second .search_result_display .search_result_description{
-	width:275px; float:left; 
+	width:273px; float:left; 
 }
 
 .column_second .search_result_display .search_for_sale{
-	width:76px; float:right; margin:20px 8px 0 0;
+	width:77px; float:right; margin:20px 8px 0 0;
 }
 
 .column_second .search_result_display .for_sale{
@@ -376,6 +384,12 @@ ul, li{
 .column_second .search_result_display .search_result_description h2{
 	font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#3B71CA; font-weight:normal;
 }
+.column_second .search_result_display .search_result_description h2 a{
+	font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#3B71CA; font-weight:normal; text-decoration:none;
+}
+
+.column_second .search_result_display .search_result_description h2 a:hover{text-decoration:underline;}
+
 
 .column_second .search_result_display .search_result_description p{
 	font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; line-height:14px; font-weight:normal;
@@ -394,11 +408,11 @@ ul, li{
 /*____________Pagination____________*/
 
 .column_second .pagination{
-	width:100%; float:left; padding:20px 0 0 0; text-align:center; margin:0 0 20px 0; border-top:1px solid #EEE;
+	width:100%; float:left; padding:20px 0 0 0; text-align:left; margin:0 0 20px 0; border-top:1px solid #EEE;
 }
 
 .column_second .pagination ul{
-	margin:0 0 0 73px; padding:0; 
+	margin:0; float:right; padding:0; 
 }
 
 .column_second .pagination ul li{
@@ -425,7 +439,7 @@ ul, li{
 
 .column_second .pagination a:link,
 .column_second .pagination a:visited {
-	color:#0e509e; display:block; float:left; padding:3px 6px; text-decoration:none;
+	display:block; float:left; padding:3px 6px; text-decoration:none;
 }
 
 .column_second .pagination a:hover{
@@ -656,16 +670,16 @@ text-transform:uppercase; }
 	text-decoration:none;
 }
 
-.hidden {display:none;} /* hide tabs */
-.hidden {width:162px;background:url(../assets/images/popup_bg.png) no-repeat 0 0px; height:101px;
+.hidden_popup {display:none;} /* hide tabs */
+.hidden_popup{width:162px;background:url(../assets/images/popup_bg.png) no-repeat 0 0px; height:101px;
 padding:14px 0 0 14px;margin:10px 0; position:absolute; right:14px; top:26px;}
 a.on {color:#444;}
 
-.hidden ul li{display:block;}
+.hidden_popup ul li{display:block;}
 
-.hidden ul li a{display:block; text-decoration:none; margin:5px 0; color:#000;   font-family: 'MyriadPro-Cond';}
+.hidden_popup ul li a{display:block; text-decoration:none; margin:5px 0; color:#000;   font-family: 'MyriadPro-Cond';}
 
-.hidden ul li a:hover{display:block; text-decoration:underline;}
+.hidden_popup ul li a:hover{display:block; text-decoration:underline;}
 
 /** flash message **/
 div.flash-error, div.flash-notice, div.flash-success

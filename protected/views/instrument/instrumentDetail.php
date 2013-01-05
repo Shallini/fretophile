@@ -1,7 +1,5 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 <style>
-
-
 	/* This rule is read by Galleria to define the gallery height: */
 	#galleria{height:500px}
 
@@ -88,7 +86,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/assets/js/gal
 															   //echo "<a href=\"javascript:;\">".$tag . "</a> &#8226; " ;
 															}
 														}else{
+														   echo "<ul class=\"tags_listing\">";
 														   echo "<li><a href=\"javascript:;\">".$tags . "</a></li>" ;
+														   echo "</ul>";
 														}
 													}else{
 													  echo "No Tags";

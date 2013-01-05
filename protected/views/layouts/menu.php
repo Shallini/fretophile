@@ -1,22 +1,31 @@
 <?php 
+
 if(isset(Yii::app()->user->id)):
   $base= Yii::app()->getBaseUrl(true);
   $orgimg = Yii::app()->user->user_image;						
   $img = str_replace('originals', 'tiny', $orgimg);//getting small image path
+endif;
 
-?>
+ // checking for home page
+$controller = Yii::app()->getController();
+$isHome = $controller->getId() === 'home' || $controller->getAction()->getId() === 'index';
 
-<?php endif;?>	
-	
+// Not to display content if it is home page
+ 
+ if ($isHome!=1){?>
+	<div class="logo"><a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site"><img src="<?php echo Yii::app()->request->baseUrl; ?>/assets/images/logo.png" alt="" /></a></div>
+	 <?php include('topsearch.php');?>
+	<div class="forum"><a href="#">Forum</a></div>
+<?php }?>
 	<div class="user_panel">
 	    <?php if(!Yii::app()->user->isGuest){?>
 		<div class="user_img"><img src="<?php echo $base.'/'.$img; ?>" alt="" /></div>      
 		<p class="user_name"><a href="#" class="showhidden"><?php echo Yii::app()->user->name;?></a></p>
-		<div class="hidden">
+		<div class="hidden_popup">
 		<ul>
 		<li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/site/editprofile'; ?>">Edit Profile</a></li>
 		<li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/instrument/add'; ?>">Add Instrument</a></li>
-		<li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/instrument/list'; ?>">List Instrument</a></li>
+		<!-- <li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/instrument/list'; ?>">List Instrument</a></li> -->
 		<li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/site/logout'; ?>">Logout</a></li>
 		</ul>
 		</div>

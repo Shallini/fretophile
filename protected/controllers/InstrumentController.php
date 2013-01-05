@@ -4,6 +4,8 @@ class InstrumentController extends Controller
 {
 	public $layout='fretoinner';	
 	public $image;
+	public $val1;
+	public $val2;
 	
 	/* public function actionCreate()
     {
@@ -27,6 +29,7 @@ class InstrumentController extends Controller
             'model'=>$model,
         ));
     } */
+	
 	
 	public function actionIndex()
 	{
@@ -99,6 +102,144 @@ class InstrumentController extends Controller
 				
 		//$inst = Instrument::model()->findAll();		 
 		$this->render('instrumentlist',array('inst' => $inst));	 
+	    
+	}
+	
+	// For Filter
+	
+	public function accessRules()
+	{
+	  return array(
+		array('allow',
+			  'actions'=>array('ajaxrequest'),
+			  'users'=>array('@'),
+		),
+		// ...
+		array('deny',  // deny all users
+			  'users'=>array('*'),
+		),
+	  );
+	}
+	public function actionAjaxRequest()
+	{	
+	}
+
+	public function actionInstrumentFilter()
+	{	    
+		$this->layout = 'listingcolumn2';	
+	  //if (($forSale = Yii::app()->getRequest()->getParam('for_sale', null)) !== null) {
+	  if(isset($_GET['forsale'])){
+	  
+			$forSale = $_GET['forsale'];
+		    //$criteria=new CDbCriteria(array(
+			//'condition'=>"year LIKE '%$term%' OR model LIKE '%$term%'",
+			
+			$criteria=new CDbCriteria();
+			$criteria->condition = "forsale = $forSale";
+		}
+		
+		if(isset($_GET['tid'])){
+		
+			$parentMade = $_GET['tid'];
+			$criteria=new CDbCriteria();
+			$criteria->condition = "type_id = $parentMade";
+			
+		}
+		
+		if(isset($_GET['mid'])){
+		
+			$brandMade = $_GET['mid'];
+			$criteria=new CDbCriteria();
+			$criteria->condition = "make_id = $brandMade";
+			
+		}
+		
+		if(isset($_GET['year'])){
+		
+			$year = $_GET['year'];
+			$criteria=new CDbCriteria();
+			$criteria->condition = "year = $year";
+			
+		}
+		
+		if(isset($_GET['id'])){
+		
+			$id = $_GET['id'];
+			$criteria = new CDbCriteria();
+			$criteria->condition = "user_id in (select userid from {{user}} where usertypeid =$id)";
+			
+			//$criteria = Instrument::model()->getUserItems($id);
+			
+		}
+		
+		$count=Instrument::model()->count($criteria);
+		$pages=new CPagination($count);
+
+		// results per page
+		$pages->pageSize=6;
+		$pages->applyLimit($criteria);
+	    $models=Instrument::model()->findAll($criteria);
+
+		$this->render('instrumentlist', array(
+		'inst' => $models,
+			 'pages' => $pages
+		));
+	  //echo '<br>'.Yii::app()->getRequest()->getParam('for_sale');
+	 
+	  //$val1 = $_POST['val1'];
+	  //$val2 = $_POST['val2'];
+	 
+	  //
+	  // Perform processing
+	  //
+	 
+	  //
+	  // echo the AJAX response
+	  //
+	  //$model = $val1;
+	  //$this->renderPartial('_view',array('model'=>$model));
+	  //echo "some sort of response".$val1;
+	 
+	  Yii::app()->end();
+	}
+	
+	// For Searching
+	public function actionSearch()
+	{
+		$this->layout = 'listingcolumn2';	
+
+		if (($term = Yii::app()->getRequest()->getParam('q', null)) !== null) {
+		    $criteria=new CDbCriteria(array(
+			'condition'=>"year LIKE '%$term%' OR model LIKE '%$term%'",
+			
+		));
+		
+		$count=Instrument::model()->count($criteria);
+		$pages=new CPagination($count);
+
+		// results per page
+		$pages->pageSize=6;
+		$pages->applyLimit($criteria);
+		$models=Instrument::model()->findAll($criteria);
+
+		$this->render('instrumentlist', array(
+		'inst' => $models,
+			 'pages' => $pages
+		));
+		
+
+		/* $dataProvider=new CActiveDataProvider('Instrument', array(
+			'pagination'=>array(
+				'pageSize'=>1,
+			),
+			'criteria'=>$criteria,
+		));
+        $p = $dataProvider->getData();
+		$this->render('instrumentlist',array(
+			'inst'=>$p,
+		)); */
+		
+		}	
 	    
 	}
 

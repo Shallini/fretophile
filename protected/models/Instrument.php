@@ -15,6 +15,8 @@ class Instrument extends CActiveRecord
 	public $tags;
     public $forsale;
     public $image;	
+	
+	private $total;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -129,6 +131,155 @@ class Instrument extends CActiveRecord
 		}
 	}
 	
+	public function findSimilarInstruments($limit=10,$make=null,$typeid=null){
+	
+		$models=$this->findAll(array(
+			'condition'=>'make_id = '.$make .' AND item_id !='.$typeid,
+			'limit'=>$limit,
+		));
+		
+		return $models;
+	}
+	
+	public function forSaleCount(){
+	 $forsale = Yii::app()->db->createCommand()
+		->select('forsale,count(*) as total')
+		->from('{{items}}')		
+		->group('forsale')
+		//->order('item_id Asc')
+		->queryAll();
+
+	   return $forsale;
+     }	
+	 
+	
+	 
+	public function getParentInstruments(){
+	
+		$instrument = Yii::app()->db->createCommand()
+		->select('type_id,name')
+		->from('{{itemtype}}')		
+		->where('parentid=0')
+		//->group('name')		
+		->queryAll();
+
+	   return $instrument;
+		
+	}
+	
+	public function getChildInstruments(){
+	
+		$instrument = Yii::app()->db->createCommand()
+		->select('type_id,name')
+		->from('{{itemtype}}')		
+		->where('parentid != 0')
+		//->group('name')		
+		->queryAll();
+
+	   return $instrument;
+		
+	}
+	
+	
+	
+	public function getBrands(){
+	
+		$brands = Yii::app()->db->createCommand()
+					->select('make_id,name')
+					->from('{{make}}')
+					//->group('name')		
+					->queryAll();
+
+	   return $brands;
+		
+	}
+	
+	public function getYearCount(){
+	 $years = Yii::app()->db->createCommand()
+		->select('year,count(*) as total')
+		->from('{{items}}')		
+		->group('year')
+		->order('year Asc')
+		->queryAll();
+
+	   return $years;
+     }	
+
+	 public function getUserType(){
+
+		$userType = Yii::app()->db->createCommand()
+		->select('userid,usertypeid')
+		->from('{{user}}')		
+		->queryAll();
+
+	   return $userType;
+		
+	}
+	
+	public function getUserTypeName(){
+
+		$userTypeNames = Yii::app()->db->createCommand()
+		->select('usertypeid,name')
+		->from('{{usertype}}')
+        //->where("usertypeid = $id")		
+		->queryAll();
+		//$userTypeName = $userTypeNames['name'];
+	   return $userTypeNames;
+		
+	}
+	
+	public function getItemsTypeCount($item=null){	
+	
+		$typesCount = Yii::app()->db->createCommand()
+			->select('count(*) as total')
+			->from('{{items}}')	
+			->where('type_id=:type_id', array(':type_id'=>$item))		
+			->queryRow();    
+		   $itemTotal = $typesCount['total'];	    
+		   return $itemTotal;
+		
+		
+     }	
+	 
+	 public function getItemsBrandCount($item=null){	
+	
+		$typesCount = Yii::app()->db->createCommand()
+			->select('count(*) as total')
+			->from('{{items}}')	
+			->where('make_id=:make_id', array(':make_id'=>$item))		
+			->queryRow();    
+		   $itemTotal = $typesCount['total']; 
+	   
+		   return $itemTotal;
+	
+     }	
+	 
+	 public function getItemsUserCount($utid=null){
+
+		/* $uItemCount = Yii::app()->db->createCommand()
+			->select('count(*) as total')
+			->from('{{items}}')	
+			->where('user_id=:user_id', array(':user_id'=>$utid))		
+			->queryRow(); */
+			$sql = "select count(*) as total from {{items}} where user_id in (select userid from {{user}} where usertypeid =$utid)";
+			$command = Yii::app()->db->createCommand($sql);
+			$uItemCount = $command->queryRow();
+			
+		   $uItemTotal = $uItemCount['total']; 
+	   
+		   return $uItemTotal;
+		
+	}
+	
+	public function getUserItems($utid=null){
+		
+			$sql = "select item_id,year,model from {{items}} where user_id in (select userid from {{user}} where usertypeid =$utid)";
+			$command = Yii::app()->db->createCommand($sql);
+			$uItems = $command->queryAll();
+	   
+		    return $uItems;
+		
+	}
 	
 	public function beforeSave() {
 		if ($this->isNewRecord){

@@ -26,12 +26,12 @@
 	<script type="text/javascript"> 
 	//$(function () {
     $(document).ready(function() {
-	var hiddendivs = $('div.hidden'); //selector for all the hidden div's
+	var hiddendivs = $('div.hidden_popup'); //selector for all the hidden div's
 	var showmore = $('a.showhidden');
 
 	showmore.live('click', function() {
 	$(this).toggleClass('on')
-	$(this).parent().nextAll('div.hidden:first').slideToggle(300)
+	$(this).parent().nextAll('div.hidden_popup:first').slideToggle(300)
 	this.blur()
 	return false;
 	})
