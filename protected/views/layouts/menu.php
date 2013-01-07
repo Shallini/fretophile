@@ -24,7 +24,7 @@ $isHome = $controller->getId() === 'home' || $controller->getAction()->getId() =
 		<div class="hidden_popup">
 		<ul>
 		<li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/site/editprofile'; ?>">Edit Profile</a></li>
-		<li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/instrument/add'; ?>">Add Instrument</a></li>
+		<li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/instrument/addinstrument'; ?>">Add Instrument</a></li>
 		<!-- <li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/instrument/list'; ?>">List Instrument</a></li> -->
 		<li><a href="<?php echo Yii::app()->request->baseUrl.'/index.php/site/logout'; ?>">Logout</a></li>
 		</ul>

@@ -21,7 +21,7 @@ if(!empty($orgimg)){
 		<div class="user_info_text">
 		<h3><?php echo $model->firstname .' '.$model->lastname; ?></h3>
 		<p>Member Name:<?php echo ucfirst($model->username); ?></p>
-		<p>Member Since: 3/3/2012</p>
+		<p>Member Since: <?php echo $mysqldate = date( 'm/d/Y', strtotime($model->user_created) );?>	</p>
 		<?php $city = ucfirst($model->city) ;
 			  $state = ucfirst($model->state);
 		      $country  = ucfirst($model->country); 
@@ -49,7 +49,7 @@ if(!empty($orgimg)){
 			  }
 		?>
 		<p>Location: <?php echo $location; ?></p>
-		<p>Website: <a href="#">www.jonchickneas.com</a></p>
+		<p>Website: <a href="<?php echo 'http://'.User::model()->getSiteName($model->siteid);?>" target="_blank"><?php echo User::model()->getSiteName($model->siteid);?></a></p>
 
 		</div>
 

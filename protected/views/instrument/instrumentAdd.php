@@ -3,6 +3,17 @@ $this->pageTitle=Yii::app()->name . ' - Instrument Upload';
 $this->breadcrumbs=array('Instrument Upload');
 ?>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#brand').keyup(function(event) {
+      $('#Instrument_brand').val($('#brand').val());
+	  $('#Instrument_tags').val($('#brand').val());
+    });
+
+  });
+</script>
+
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array('id'=>'instrumentupload-form','enableAjaxValidation'=>true,)); ?>
 <?php //echo CHtml::beginForm(); ?>
@@ -21,9 +32,41 @@ $this->breadcrumbs=array('Instrument Upload');
 		<?php echo $form->error($model,'instrument_type'); ?>
 		</div>
 		<div class="row">
-		<?php echo $form->labelEx($model,'brand'); ?>
-		<?php echo $form->textField($model,'brand',array('class'=>'')); ?>
+		<?php echo $form->labelEx($model,'brand'); ?>	
+		<?php
+		// ext is a shortcut for application.extensions
+		$this->widget('ext.myAutoComplete', array(
+			'name' => 'brand',
+			'source' => $this->createUrl('instrument/autocomplete'),
+		// attribute_value is a custom property that returns the 
+		// name of our related object -ie return $model->related_model->name
+			'value' => $model->isNewRecord ? '': $model->attribute_value,
+			'options' => array(
+				'minLength'=>3,
+				'autoFill'=>false,
+				'focus'=> 'js:function( event, ui ) {
+					$( "#brand" ).val( ui.item.name );
+					return false;
+				}',
+				'select'=>'js:function( event, ui ) {
+					$("#'.CHtml::activeId($model,'attribute_id').'")
+					.val(ui.item.id);
+					return false;
+				}'
+			 ),
+			'htmlOptions'=>array('class'=>'input-1', 'autocomplete'=>'off'),
+			'methodChain'=>'.data( "autocomplete" )._renderItem = function( ul, item ) {
+				return $( "<li></li>" )
+					.data( "item.autocomplete", item )
+					.append( "<a>" + item.name +  "</a>" )
+					.appendTo( ul );
+			};'
+		));
+		?>
+		<?php echo $form->hiddenField($model,'brand',array('class'=>'')); ?>
 		<?php echo $form->error($model,'brand'); ?>
+		
+		
 		</div>
 		<div class="row" >
 		<?php echo $form->labelEx($model,'year'); ?>
@@ -58,7 +101,7 @@ $this->breadcrumbs=array('Instrument Upload');
 		</div>
         <div style="clear:both"></div>
    	</div>     
-	</div>
+	
 
 <?php //echo CHtml::endForm(); ?>
 <?php $this->endWidget(); ?>

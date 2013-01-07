@@ -14,7 +14,8 @@ class Instrument extends CActiveRecord
 	public $instrument_desc;
 	public $tags;
     public $forsale;
-    public $image;	
+    public $image;
+    public $attribute_id;	
 	
 	private $total;
 
@@ -79,57 +80,129 @@ class Instrument extends CActiveRecord
 		);
 	}
 	
-	public function addInstrument(){
+	public function addCreate(){
 	
 		$model = new Instrument;
 		
 		if(isset($_POST['Instrument']))
 		{
-			$values = $model->attributes=$_POST['Instrument'];
-			//echo '<pre>';print_r($values);echo '</pre>';
-			$command = Yii::app()->db->createCommand();
-			$command->insert('tbl_tags', array('tag'=>$values['tags'],));
+			//$values = $model->attributes = $_POST['Instrument'];
+			$values = $_POST['Instrument'];
+			//echo '<pre>';print_r($values);echo '</pre>';		
+	
+			//INSERTING INFORMATION TO TAG TABLE
+			$insertedTagId = $this->addTag($values['tags']);
 			
-			$insert_id = Yii::app()->db->getLastInsertID();
-			$inserted_tag_id = $insert_id;
-			
-			//INSERTING INFORMATION TO MAKE TABLE
-			
-			$command->insert('{{make}}', array('tagid'=>$inserted_tag_id,'name'=>$values['brand'],'description'=>''));
-			$getMakeInsertId = Yii::app()->db->getLastInsertID();
-			
-			
-			//INSERTING INFORMATION TO ITEMS TABLE
-			$command->insert('{{items}}', array('user_id'=>Yii::app()->user->id,'make_id'=>$getMakeInsertId,'type_id'=>$values['instrument_type'],'description'=>$values['instrument_desc'],'year'=>$values['year'],'date_created'=>new CDbExpression('NOW()'),'last_modified'=>new CDbExpression('NOW()'),'forsale'=>$values['forsale']));
-			$inserted_item_id = Yii::app()->db->getLastInsertID();
-			
+			//INSERTING INFORMATION TO MAKE TABLE			
+			$getMakeId = $this->addBrand($insertedTagId,$values['brand']);		
+
+			//INSERTING INFORMATION TO ITEMS TABLE	
+			$insertedItemId = $this->addItem($values['instrument_type'],$values['model'],$values['instrument_desc'],$values['year'],$values['forsale'],22);			
+   			
 			//INSERTING INFORMATION TO TAG LOOK UP TABLE
-			$command->insert('{{tag_lookup}}', array('tagid'=>$inserted_tag_id,'itemid'=>$inserted_item_id,));
-			
-			if($command->execute())
+			$finalRes = $this->addTagLookup($insertedTagId,$insertedItemId);
+			/* if(!empty($insertedItemId))
 			{
-			   return true;
+			 echo 'save';
+			 return true;
 			}else{
-			  return false;
-			}
-			
-			/* $model->user_id = Yii::app()->user->id;
-			//$model->make_id = '';
-			$model->site_id = 1;
-			$model->type_id = $values['instrument_type'];
-			//$model->gallery_id = '';
-			$model->model = 1;
-			$model->description = $values['instrument_desc'];
-			$model->year = $values['year'];
-			
-			//$model->manufacture_location = 1;
-			//$model->date_created = now();
-			
-			 //if($model->save()) {
-				 //return true;
-			//}  */
+			 echo 'notsave';
+			 return false;
+			} */
+			return $finalRes;
 		}
 	}
+	
+	public function addItem($insType,$model,$insDesc,$year,$forsale,$getMakeId){
+	
+		$itemCommand = Yii::app()->db->createCommand();
+		$itemCommand->insert('{{items}}', array('user_id'=>Yii::app()->user->id,'make_id'=>$getMakeId,'type_id'=>$insType,'model'=>$model,'description'=>$insDesc,'year'=>$year,'date_created'=>new CDbExpression('NOW()'),'last_modified'=>new CDbExpression('NOW()'),'forsale'=>$forsale));
+		
+		//$itemCommand->query();
+		$inserted_item_id = Yii::app()->db->getLastInsertID();
+		
+		return $inserted_item_id;
+		
+	}
+	
+	public function addTag($tag){
+	
+		$command = Yii::app()->db->createCommand();
+		$selectTag = $this->selectTag($tag);
+		
+		if(empty($selectTag)){
+			$command->insert('tbl_tags', array('tag'=>$tag,));
+			$insert_id = Yii::app()->db->getLastInsertID();
+			$tagId = $insert_id;
+		}else{
+		    $tagId = $selectTag;
+		}
+		return $tagId;
+		
+	}
+	
+	public function addBrand($instTagId,$brand){
+		
+		$command = Yii::app()->db->createCommand();
+		$selectMake = $this->selectBrand($brand);
+		
+		if(empty($selectMake)){
+			$command->insert('{{make}}', array('tagid'=>$instTagId,'name'=>$brand,'description'=>''));
+		    $getMakeInsertId = Yii::app()->db->getLastInsertID();
+			$brandId = $getMakeInsertId;
+		}else{
+			$brandId = $selectMake;
+		}
+		
+			
+		return $brandId;
+		
+	}
+	
+	public function selectTag($tag){
+		
+		$command = Yii::app()->db->createCommand()
+								->select('tag_id')
+								->from('{{tags}}')		
+								->where("tag LIKE '$tag'")		
+								->queryRow();
+		$tagId = $command['tag_id'];
+			
+		return $tagId;
+		
+	}
+	
+	public function selectBrand($brand){
+		
+		$command = Yii::app()->db->createCommand()
+								->select('make_id')
+								->from('{{make}}')		
+								->where("name LIKE '$brand'")		
+								->queryRow();
+		$make = $command['make_id'];
+			
+		return $make;
+		
+	}
+	
+	public function addTagLookup($inserted_tag_id,$inserted_item_id){
+		
+		$command = Yii::app()->db->createCommand();
+		$command->insert('{{tag_lookup}}', array('tagid'=>$inserted_tag_id,'itemid'=>$inserted_item_id,));
+		//$insert_id = Yii::app()->db->getLastInsertID();
+		
+		if($command->execute())
+		{
+		   return true;
+		}else{
+		  return false;
+		}		
+	
+		
+	}
+	
+	
+	
 	
 	public function findSimilarInstruments($limit=10,$make=null,$typeid=null){
 	
@@ -291,5 +364,21 @@ class Instrument extends CActiveRecord
 		}
 		return parent::beforeSave();
 	}
+	
+	public static function usersAutoComplete($name='') {
+ 
+        // Recommended: Secure Way to Write SQL in Yii 
+        $sql= 'SELECT make_id ,name FROM {{make}} WHERE name LIKE :name';
+        $name = $name.'%';
+        return Yii::app()->db->createCommand($sql)->queryAll(true,array(':name'=>$name));
+ 
+        // Not Recommended: Simple Way for those who can't understand the above way.
+    // Uncomment the below and comment out above 3 lines 
+    /*
+    $sql= "SELECT id ,title AS label FROM users WHERE title LIKE '$name%'";
+        return Yii::app()->db->createCommand($sql)->queryAll();
+    */
+ 
+    }
 	
 }

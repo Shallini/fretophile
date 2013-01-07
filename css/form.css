@@ -215,7 +215,7 @@ div.wide form .errorMessage
 #signup_box #signup-form .form label{
 	display: block;font-size: 0.9em;font-weight: bold; color:#545454; padding:8px 0 3px 0;
 	}
-#User_firstname, #User_lastname, #User_email, #User_username, #User_password, #User_password2, #User_city, #User_state, #User_country, #User_password1{
+#User_firstname, #User_lastname, #User_email, #User_username, #User_password, #User_password2, #User_city, #User_state, #User_country, #User_password1,#User_website{
 	background: url("../assets/images/signup_bg.png") no-repeat 0 0; height:33px; line-height:33px; width:296px; border:none; padding:0 10px; 
 	color:#7e7e7e;}
 .signup_input{
@@ -263,11 +263,12 @@ background: url("../assets/images/signup_bg.png") no-repeat 0 0; height:33px; li
 border:1px solid #d8d8d8; background:#fff !important;
 	-webkit-box-shadow: 1px 1px 4px rgba(50, 50, 50, 0.50);
 	-moz-box-shadow:    1px 1px 4px rgba(50, 50, 50, 0.50);
-	box-shadow:         1px 1px 4px rgba(50, 50, 50, 0.50);}
+	box-shadow:         1px 1px 4px rgba(50, 50, 50, 0.50);
+}
 .msg_body{
     margin: 15px 0 15px 15px;
-    padding: 0 0 4px 20px;
-border:1px solid #d8d8d8; background:#fff !important;
+   
+    border:1px solid #d8d8d8; background:#fff !important;
 	-webkit-box-shadow: 1px 1px 4px rgba(50, 50, 50, 0.50);
 	-moz-box-shadow:    1px 1px 4px rgba(50, 50, 50, 0.50);
 	box-shadow:         1px 1px 4px rgba(50, 50, 50, 0.50);
@@ -277,9 +278,15 @@ border:1px solid #d8d8d8; background:#fff !important;
 #Instrument_model, #Instrument_brand, #Instrument_tags, #Instrument_year{
 	background: url("../assets/images/upload_input_bg.png") no-repeat 0 0; height:33px; line-height:33px; width:236px; border:none; padding:0 10px; 
 	color:#7e7e7e;}
+.upload_box input , select {
+	background: url("../assets/images/upload_input_bg.png") no-repeat 0 0; height:33px; line-height:33px; width:236px; border:none; padding:0 10px; 
+	color:#7e7e7e;}
+}
+
 	
 #Instrument_instrument_type, #forsale{ width:256px; height:30px;}
-#Instrument_instrument_desc{ width:256px;}
+#Instrument_instrument_desc{ width:256px; border:1px solid #ccc;}
+
 .upload input{
 	background: url("../assets/images/submit_btn.png") no-repeat 0 0; height:32px; line-height:32px; width:82px; border:none; 
 	text-indent:-9999px; float:left; margin:10px 4px 20px 0 !important; cursor:pointer;

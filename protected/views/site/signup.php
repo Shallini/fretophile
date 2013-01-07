@@ -95,6 +95,11 @@ $form=$this->beginWidget('CActiveForm', array('id'=>'signup-form','enableAjaxVal
 		<?php echo $form->passwordField($model,'password2'); ?>
 		<?php echo $form->error($model,'password2'); ?>		
 	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'website'); ?>
+		<?php echo $form->textField($model,'website'); ?>
+		<?php echo $form->error($model,'website'); ?>
+	</div>
     
 </div><!-- signup_left id end -->
     <div class="signup_right">

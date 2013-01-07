@@ -27,6 +27,7 @@ class User extends CActiveRecord
 	public $city;
 	public $state;
 	public $country;
+	public $website;
 	public $rememberMe;
 	public $verifyCode;
 	public $newpassword;
@@ -173,6 +174,28 @@ class User extends CActiveRecord
 		return uniqid('',true);
 	}
 	
+	public function addSite($site){
+	
+		$itemCommand = Yii::app()->db->createCommand();
+		$itemCommand->insert('{{sites}}', array('url'=>$site));
+		
+		//$itemCommand->query();
+		$inserted_item_id = Yii::app()->db->getLastInsertID();
+		
+		return $inserted_item_id;
+		
+	}
+	
+	public function getSiteName($id){
+	    $command = Yii::app()->db->createCommand()
+								->select('url')
+								->from('{{sites}}')		
+								->where("siteid = $id")		
+								->queryRow();
+		$url = $command['url'];			
+		return $url;
+	}
+	
 	public function addUser($filename)
 	{
 		//$model=new SignupForm;
@@ -184,6 +207,13 @@ class User extends CActiveRecord
 		  $values = $model->attributes=$_POST['User'];
           $model->usertypeid=$values['usertype'];
 		  
+		  
+		  //adding site
+		  $site = $values['website'];
+		  
+		  $siteId = $this->addSite($site);
+		  $model->siteid = $siteId;
+		  
 		  if(isset($values['bussname']) && (!empty($values['bussname'])))	{
 			$model->firstname=$values['bussname'];
 		  }else{	  
@@ -194,6 +224,8 @@ class User extends CActiveRecord
 		  $model->password = $this->hashPassword($values['password1']);
 		  $model->email = $values['email'];	
 		  $model->city = $values['city'];
+		  $model->user_created = new CDbExpression('NOW()');
+		  
 		  $model->avatar_location = 'images/avatars/originals/'.$filename;
 				
 		  

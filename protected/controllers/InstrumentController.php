@@ -7,100 +7,47 @@ class InstrumentController extends Controller
 	public $val1;
 	public $val2;
 	
-	/* public function actionCreate()
-    {
-        $model=new Instrument;  // this is my model related to table
-        if(isset($_POST['Instrument']))
-        {
-            $rnd = rand(0,9999);  // generate random number between 0-9999
-            $model->attributes=$_POST['Instrument'];
- 
-            $uploadedFile=CUploadedFile::getInstance($model,'image');
-            $fileName = "{$rnd}-{$uploadedFile}";  // random number + file name
-            $model->image = $fileName;
-
-            if($model->save())
-            {
-                $uploadedFile->saveAs(Yii::app()->basePath.'/../banner/'.$fileName);  // image will uplode to rootDirectory/banner/
-                $this->redirect(array('admin'));
-            }
-        }
-        $this->render('create',array(
-            'model'=>$model,
-        ));
-    } */
 	
 	
 	public function actionIndex()
 	{
-	     /* $model=new Instrument;
-		 
-		 
-		 if(isset($_POST['Instrument']))
-		 {
-			$model->attributes=$_POST['Instrument'];
-			if($model->validate())
-			{print_r($_POST);
-
-			
-				if($model->addInstrument()){
-				exit;
-				//Yii::app()->Instrument->setFlash('signup','Thank you for signup .');
-				//$this->refresh();
-				//$this->redirect(array('index'));
-				}
-				else	{
-			    ////Yii::app()->Instrument->setFlash('signup','Problem in saving the data');
-				//$this->refresh();
-				//$this->redirect(array('instrument'));
-				}
-			}
-		 }
-	     $this->render('instrumentUpload',array('model'=>$model)); */
+	     
 	}
 	
-	public function actionAdd()
+	public function actionAddInstrument()
 	{
+	     $this->layout = 'instrumentupload';
 	     $model = new Instrument;		 	 
-		 $this->layout = 'instrumentupload';
-		 if(isset($_POST['Instrument']))
-		 {
-			$model->attributes=$_POST['Instrument'];
+		
+		if(isset($_POST['Instrument']))
+		 { 
+		 
+		    $model->attributes = $_POST['Instrument'];
+			
 			if($model->validate())
-			{		
-				if($model->addInstrument()){				
-				 //Yii::app()->instrument->setFlash('addinstrument','Thank you for adding instrument .');
-				//$this->refresh();
-				//$this->redirect(array('index'));
-				}
-				else	{
-			    ////Yii::app()->Instrument->setFlash('signup','Problem in saving the data');
-				//$this->refresh();
-				//$this->redirect(array('instrument'));
-				}
+			{	
+				/* $model->user_id = Yii::app()->user->id;
+				$model->year = $model->year;
+				$model->date_created = new CDbExpression('NOW()');
+				echo "isNewRecord?".$model->isNewRecord; // 1 (true)
+				$model->save();
+				echo "isNewRecord?".$model->isNewRecord; // (false) */
+				//if($model->addCreate()){
+					 echo 'here';
+				//}
+				
 			}
 		 }
-	     $this->render('instrumentadd',array('model'=>$model));
+	    $this->render('instrumentadd',array('model'=>$model));
+		  
 	}
 	
 	public function actionList()
 	{
 		$this->layout = 'listingcolumn2';
 		
-		$criteria = new CDbCriteria(); 
-		//$criteria->select = new CDbExpression('t.item_id, t.user_id , t.make_id , t.year, t.description, {{user}}.username');
-		//$criteria->select = "item_id, user_id , make_id , year, description, username"; 
-		//$criteria->join = "LEFT JOIN {{user}} ON t.user_id = {{user}}.userid"; 
-		//$criteria->compare('status',Post::STATUS_ACTIVE); 
-		//$criteria->addInCondition('id',array(1,2,3,4,5,6));
-		
-		
-        $inst = Instrument::model()->findAll($criteria);
-		/* echo '<pre>';
-		print_r($inst);
-		echo '</pre>';  */
-				
-		//$inst = Instrument::model()->findAll();		 
+		$criteria = new CDbCriteria(); 		
+		$inst = Instrument::model()->findAll($criteria);	 
 		$this->render('instrumentlist',array('inst' => $inst));	 
 	    
 	}
@@ -122,13 +69,29 @@ class InstrumentController extends Controller
 	}
 	public function actionAjaxRequest()
 	{	
+		//echo '<br>'.Yii::app()->getRequest()->getParam('for_sale');
+		 
+		  //$val1 = $_POST['val1'];
+		  //$val2 = $_POST['val2'];
+		 
+		  //
+		  // Perform processing
+		  //
+		 
+		  //
+		  // echo the AJAX response
+		  //
+		  //$model = $val1;
+		  //$this->renderPartial('_view',array('model'=>$model));
+		  //echo "some sort of response".$val1;
+	 
 	}
 
 	public function actionInstrumentFilter()
 	{	    
 		$this->layout = 'listingcolumn2';	
-	  //if (($forSale = Yii::app()->getRequest()->getParam('for_sale', null)) !== null) {
-	  if(isset($_GET['forsale'])){
+	    //if (($forSale = Yii::app()->getRequest()->getParam('for_sale', null)) !== null) {
+	    if(isset($_GET['forsale'])){
 	  
 			$forSale = $_GET['forsale'];
 		    //$criteria=new CDbCriteria(array(
@@ -184,22 +147,7 @@ class InstrumentController extends Controller
 		'inst' => $models,
 			 'pages' => $pages
 		));
-	  //echo '<br>'.Yii::app()->getRequest()->getParam('for_sale');
-	 
-	  //$val1 = $_POST['val1'];
-	  //$val2 = $_POST['val2'];
-	 
-	  //
-	  // Perform processing
-	  //
-	 
-	  //
-	  // echo the AJAX response
-	  //
-	  //$model = $val1;
-	  //$this->renderPartial('_view',array('model'=>$model));
-	  //echo "some sort of response".$val1;
-	 
+	  
 	  Yii::app()->end();
 	}
 	
@@ -227,23 +175,11 @@ class InstrumentController extends Controller
 			 'pages' => $pages
 		));
 		
-
-		/* $dataProvider=new CActiveDataProvider('Instrument', array(
-			'pagination'=>array(
-				'pageSize'=>1,
-			),
-			'criteria'=>$criteria,
-		));
-        $p = $dataProvider->getData();
-		$this->render('instrumentlist',array(
-			'inst'=>$p,
-		)); */
-		
 		}	
 	    
 	}
 
-	public function actionNew()
+	/* public function actionNew()
 	{	     
         $model=new Instrument;  // this is my model related to table
         if(isset($_POST['Instrument']))
@@ -260,13 +196,11 @@ class InstrumentController extends Controller
 			$this->widget('ext.SAImageDisplayer', array('image' => "$fileName",'size' => 'thumb','defaultImage' => "$fileName",'group' => 'users')); 
 			$this->widget('ext.SAImageDisplayer', array('image' => "$fileName",'size' => 'big','defaultImage' => "$fileName",'group' => 'users'));
 			$this->widget('ext.SAImageDisplayer', array('image' => "$fileName",'size' => 'tiny','defaultImage' => "$fileName",'group' => 'users'));
-			/* $image = Yii::app()->image->load(Yii::app()->basePath.'/../banner/'.$fileName);
-			$image->resize(400, 100)->rotate(-45)->quality(75)->sharpen(20);
-			$image->save(); // or $image->save('images/small.jpg'); */
+
 		}
 	     $this->render('instrumentnew',array('model'=>$model));
 	}
-	
+	 */
 
 	/**
 	 * This is the action to handle external exceptions.
@@ -298,6 +232,21 @@ class InstrumentController extends Controller
 		$this->render('instrumentDetail',array('model'=>$model));	 
 	    
 	}
+	
+	public function actionAutocomplete(){
+      $res = array();
+      $term = Yii::app()->getRequest()->getParam('term', false);
+      if ($term)
+      {
+         // test table is for the sake of this example
+         $sql = 'SELECT make_id, name FROM {{make}} where LCASE(name) LIKE :name';
+         $cmd = Yii::app()->db->createCommand($sql);
+         $cmd->bindValue(":name","%".strtolower($term)."%", PDO::PARAM_STR);
+         $res = $cmd->queryAll();
+      }
+      echo CJSON::encode($res);
+      Yii::app()->end();
+}
 
 
 }
