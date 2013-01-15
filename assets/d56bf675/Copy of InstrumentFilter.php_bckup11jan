@@ -1,0 +1,162 @@
+<?php
+
+Yii::import('zii.widgets.CPortlet');
+
+class InstrumentFilter extends CPortlet
+{    
+	
+	protected function renderContent()
+	{	
+      $sel = false;
+	  $forsale = Instrument::model()->forSaleCount();
+	  $instrument = Instrument::model()->getParentInstruments();
+	  $childInstrument = Instrument::model()->getChildInstruments();
+	  $brands = Instrument::model()->getBrands();
+	  $years = Instrument::model()->getYearCount();
+	  $poster = Instrument::model()->getUserTypeName();;
+	  
+	  //Instrument::model()->getItemsUserCount();
+
+		//public static string activeCheckBox(CModel $model, string $attribute, array $htmlOptions=array ( ));
+		//public static string checkBox(string $name, boolean $checked=false, array $htmlOptions=array ( ));
+		//public static string label(string $label, string $for, array $htmlOptions=array ( ));
+		/* echo CHtml::label('Hello', 'my_checkbox');
+		echo CHtml::checkbox('my_checkbox', false, array(
+		  'submit'=>'ajaxRequest',
+		  'value'=>'pp',
+		  'params'=> array('my_checkbox'=>1)
+		));  */
+	  
+	  $show = "<ul class=\"brand_listing\">
+                    	<li>
+                        	<h3>Listing</h3>
+                            <ul>";
+								foreach ($forsale as $forsale){
+								
+								if(isset($_REQUEST['q']) && ($_REQUEST['q'] == $forsale['forsale']) && isset($_REQUEST['type']) && ($_REQUEST['type'] == 'for_sale')){
+								 $sel = true;
+								}else{
+								$sel = false;
+								}
+								
+								if($forsale['forsale'] == 1){
+								 $title = 'For Sale';
+								}else{
+								 $title = 'Not For Sale';
+								}
+								
+								$chkbox = CHtml::checkbox('q', $sel, array('submit'=>'InstrumentFilter?q='.$forsale['forsale'].'&type=for_sale','value'=>$forsale['forsale'], 'params'=> array('for_sale'=>$forsale['forsale'])));
+								$total = $forsale['total'];
+								$show .= " 	<li>$chkbox $title ($total)</li>";
+								}        
+                               
+        $show .= " </ul>
+                        </li>
+                        <li>
+                        	<h3>Poster</h3>
+                            <ul>";
+		foreach ($poster as $poster){
+			//$posterUserId = $poster['userid'];	
+			$posterUserTypeId = $poster['usertypeid'];
+			$posterName = trim($poster['name']);
+			$posterCount = Instrument::model()->getItemsUserCount($posterUserTypeId);
+			
+			if($posterName == "Player"){
+				$posterNewName = 'Individual';
+			}else{
+			    $posterNewName = $poster['name'];
+			}
+			
+			
+			//$posterTitle = Instrument::model()->getUserTypeName($posterUserTypeId);
+			
+			if(isset($_REQUEST['q']) && ($_REQUEST['q'] == $posterUserTypeId) && isset($_REQUEST['type']) &&($_REQUEST['type'] == 'id')){
+			 $sel = true;
+			}else{
+			 $sel = false;
+			}
+			
+			$chkbox = CHtml::checkbox('usertype', $sel, array('submit'=>'InstrumentFilter?q='.$posterUserTypeId.'&type=id','value'=>$posterUserTypeId,'params'=> array('usertypeid'=>$posterUserTypeId)));
+			if($posterCount!=0){
+			$show .= " 	<li>$chkbox $posterNewName ($posterCount)</li>";
+			}
+		}  
+        
+        $show.="</ul>
+                      </li>
+                       <li>
+                        <h3>Type</h3>
+                        <ul>";
+							foreach ($instrument as $parentinstrument){
+                                $type_id = $parentinstrument['type_id'];							
+								$patent_title = $parentinstrument['name'];	
+								$parenttotal = Instrument::model()->getItemsTypeCount($type_id);			
+
+								//if(isset($_GET['tid']) && ($_GET['tid'] == $type_id)){
+								if(isset($_REQUEST['q']) && ($_REQUEST['q'] == $type_id) && ($_REQUEST['type'] == 'item_id')){
+								 $sel = true;
+								}else{
+								$sel = false;
+								}
+								
+								$chkbox = CHtml::checkbox('instrument', $sel, array('submit'=>'InstrumentFilter?q='.$type_id.'&type=item_id','value'=>$type_id,'params'=> array('instrument'=>$type_id)));
+								if($parenttotal!=0){
+								$show .= " 	<li>$chkbox $patent_title ($parenttotal)</li>";
+								}
+							}  
+                            	
+         $show .= " </ul>
+                        </li>";
+                                      
+         $show .= " <li>
+                        	<h3>Brand</h3>
+                            <ul>";
+							foreach ($brands as $brand){
+								$brandId = $brand['make_id'];
+								$brandTitle = $brand['name'];								
+								$brandTotal = Instrument::model()->getItemsBrandCount($brandId);
+								
+								//if(isset($_GET['mid']) && ($_GET['mid'] == $brandId)){
+								if(isset($_REQUEST['q']) && ($_REQUEST['q'] == $brandId) && isset($_REQUEST['type']) && ($_REQUEST['type'] == 'brand')){
+								 $sel = true;
+								}else{
+								$sel = false;
+								}
+								
+								$chkbox = CHtml::checkbox('instrument', $sel, array('submit'=>'InstrumentFilter?q='.$brandId.'&type=brand','value'=>$brandId,'params'=> array('instrument'=>$brandId)));
+								
+								if($brandTotal!=0){
+								 $show .= " 	<li>$chkbox $brandTitle ($brandTotal)</li>";
+								}
+								} 
+       
+        $show .="</ul>";
+        $show .=" </li>";
+		$show .=" <li><h3>Year</h3><ul>";
+		foreach ($years as $year){
+			
+			$yearTitle = $year['year'];	
+			$yearTotal = $year['total'];
+			
+			//if(isset($_GET['year']) && ($_GET['year'] == $yearTitle)){
+			if(isset($_REQUEST['q']) && ($_REQUEST['q'] == $yearTitle) && isset($_REQUEST['type']) && ($_REQUEST['type'] == 'year')){
+			 $sel = true;
+			}else{
+			 $sel = false;
+			}
+			
+			$chkbox = CHtml::checkbox('year', $sel, array('submit'=>'InstrumentFilter?q='.$yearTitle.'&type=year','value'=>$yearTitle,
+			  'params'=> array('year'=>$yearTitle)
+			));
+			if($yearTotal!=0){
+			 $show .= " 	<li>$chkbox $yearTitle ($yearTotal)</li>";
+			}
+		} 
+		
+		$show .=" </ul></li>";
+        $show .=" </ul>";
+	  
+	  echo $show;
+		
+	}
+}

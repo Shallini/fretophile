@@ -6,7 +6,7 @@ $this->breadcrumbs=array('Instrument Upload');
 <script type="text/javascript">
   $(document).ready(function() {
 
-    $('#brand').keyup(function(event) {
+    $('#brand').blur(function(event) {
       $('#Instrument_brand').val($('#brand').val());
 	  $('#Instrument_tags').val($('#brand').val());
     });
@@ -63,10 +63,40 @@ $this->breadcrumbs=array('Instrument Upload');
 			};'
 		));
 		?>
+		
 		<?php echo $form->hiddenField($model,'brand',array('class'=>'')); ?>
 		<?php echo $form->error($model,'brand'); ?>
 		
 		
+		</div>
+		
+		<div class="row">
+		
+		
+		<?php 
+		// configure and save gallery model
+		/* $gallery = new Gallery();
+		$gallery->name = true;
+		$gallery->description = true;
+		$gallery->versions = array(
+			'small' => array(
+				'resize' => array(200, null),
+			),
+			'medium' => array(
+				'resize' => array(800, null),
+			)
+		);
+		$gallery->save();
+		 
+		// render widget in view
+		 $this->widget('GalleryManager', array('gallery' => $gallery,'controllerRoute' => '/instrument/gallery', //route to gallery controller
+			
+		)); 
+		 */
+		
+		
+		
+		?>
 		</div>
 		<div class="row" >
 		<?php echo $form->labelEx($model,'year'); ?>

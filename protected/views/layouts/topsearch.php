@@ -4,3 +4,7 @@
 					<input type="submit" value="GO" /> 
 					
                 </div>-->
+<?php
+      /* $this->widget('SearchBlock', array(
+      )); */ 
+?>

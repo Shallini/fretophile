@@ -26,9 +26,12 @@
 						$itemId = Yii::app()->getRequest()->getParam('id');
 						$findInfo = Instrument::model()->findbyPk($itemId);//fetch info of id						  
 						$makeId = $findInfo->make_id;//get make id
+						$year = $findInfo->year;//get year
+						$model = $findInfo->model;//get model text
 						
 						//calling similar widget						
-						$this->widget('SimilarInstrument', array('limit'=>5,'make'=>$makeId,'item'=>$itemId )); 
+						//$this->widget('SimilarInstrument', array('limit'=>5,'make'=>$makeId,'item'=>$itemId ));
+						$this->widget('SimilarInstrument', array('limit'=>5,'make'=>$makeId,'item'=>$itemId,'year'=>$year,'model'=>$model)); 
 						
 						?>
                         

@@ -4,15 +4,13 @@ Yii::import('zii.widgets.CPortlet');
 
 class SimilarInstrument extends CPortlet
 {
-	public $limit;
-	public $make;
-	public $item;
-	public $year;
-	public $model;
+    public $limit;
+    public $make;
+    public $item;
 	
 	protected function renderContent()
 	{
-		$instruments = Instrument::model()->findSimilarInstruments($this->limit,$this->make,$this->item,$this->year,$this->model);
+		$instruments = Instrument::model()->findSimilarInstruments($this->limit,$this->make,$this->item);
 		$count_item =  count($instruments);
 		
 		$imageUrl = Yii::app()->request->baseUrl .'/assets/images/img-1.jpg';

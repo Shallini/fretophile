@@ -40,7 +40,7 @@ $form=$this->beginWidget('CActiveForm', array('id'=>'signup-form','enableAjaxVal
     
 	<div class="row" id="usertypedropdown">
 		<?php echo $form->labelEx($model,'usertype'); ?>
-		<?php echo $form->dropDownList($model,'usertype',Usertype::items('usertypeid'),array(
+		<?php /* echo $form->dropDownList($model,'usertype',Usertype::items('usertypeid'),array(
                                           'empty'=>'Choose one', 
                                           'onchange'=>'var selectedval = $(this).val();  
 											  if(selectedval == 1){
@@ -53,7 +53,23 @@ $form=$this->beginWidget('CActiveForm', array('id'=>'signup-form','enableAjaxVal
 												$("#lastnamediv").show();
 											  }',
                                           )
-); ?>
+        ); */ 
+		
+		echo $form->dropDownList($model,'usertype',Usertype::items('usertypeid'),array(                                          
+                                          'onchange'=>'var selectedval = $(this).val();  
+											  if(selectedval == 1){
+												$("#bussinessname").show();
+												$("#firstnamediv").hide();
+												$("#lastnamediv").hide();
+											  }else{
+												$("#bussinessname").hide();
+												$("#firstnamediv").show();
+												$("#lastnamediv").show();
+											  }',
+                                          )
+        );
+		
+		?>
 		<?php echo $form->error($model,'usertype'); ?>		
 	</div>
 	<div class="row" id="firstnamediv">

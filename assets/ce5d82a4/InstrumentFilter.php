@@ -2,26 +2,6 @@
    function getParam($val) {
        return (isset($_GET[$val])) ? "&".$val."=".$_GET[$val]: '';
    }
-   
-   function getTypeParam() {
-       return getParam('brand').getParam('year').getParam('poster').getParam('sale');
-   }
-   
-   function getBrandsParam() {
-       return getParam('type').getParam('year').getParam('poster').getParam('sale');
-   }
-   
-   function getYearParam() {
-       return getParam('type').getParam('brand').getParam('poster').getParam('sale');
-   }
-   
-   function getSaleParam() {
-       return getParam('type').getParam('brand').getParam('year').getParam('poster');
-   }
-   
-   function getPosterParam() {
-       return getParam('type').getParam('brand').getParam('year').getParam('sale');
-   }
 ?>
 
 <script type="text/javascript">
@@ -35,35 +15,35 @@
 			   if(rel == "type") {
 				   <?php if(isset($_GET["type"])) { ?>
 				   var typeUpdate = "<?php echo str_replace(array('[',']'),'',$_GET["type"]); ?>"+val;
-				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getTypeParam(); ?>" + "&"+rel+"=["+typeUpdate+",]";
+				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+typeUpdate+",]";
 				   <?php } else { ?>
 				   window.location.href = location + "&"+rel+"=["+val+",]";
 				   <?php } ?>
 			   } else if(rel == "brand") {
 				   <?php if(isset($_GET["brand"])) { ?>
 				   var brandUpdate = "<?php echo str_replace(array('[',']'),'',$_GET["brand"]); ?>"+val;
-				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getBrandsParam(); ?>" + "&"+rel+"=["+brandUpdate+",]";
+				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+brandUpdate+",]";
 				   <?php } else { ?>
 				   window.location.href = location + "&"+rel+"=["+val+",]";
 				   <?php } ?>
 			   } else if(rel == "year") {
 				   <?php if(isset($_GET["year"])) { ?>
 				   var yearUpdate = "<?php echo str_replace(array('[',']'),'',$_GET["year"]); ?>"+val;
-				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getYearParam(); ?>" + "&"+rel+"=["+yearUpdate+",]";
+				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+yearUpdate+",]";
 				   <?php } else { ?>
 				   window.location.href = location + "&"+rel+"=["+val+",]";
 				   <?php } ?>
 			   } else if(rel == "sale") {
 				   <?php if(isset($_GET["sale"])) { ?>
 				   var saleUpdate = "<?php echo str_replace(array('[',']'),'',$_GET["sale"]); ?>"+val;
-				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getSaleParam(); ?>" + "&"+rel+"=["+saleUpdate+",]";
+				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+saleUpdate+",]";
 				   <?php } else { ?>
 				   window.location.href = location + "&"+rel+"=["+val+",]";
 				   <?php } ?>
 			   } else if(rel == "poster") {
 				   <?php if(isset($_GET["poster"])) { ?>
 				   var posterUpdate = "<?php echo str_replace(array('[',']'),'',$_GET["poster"]); ?>"+val;
-				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getPosterParam(); ?>" + "&"+rel+"=["+posterUpdate+",]";
+				   window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+posterUpdate+",]";
 				   <?php } else { ?>
 				   window.location.href = location + "&"+rel+"=["+val+",]";
 				   <?php } ?>
@@ -76,9 +56,9 @@
 					   var updateType = "<?php echo str_replace(array('[',']'),'',$_GET["type"]); ?>";
 					   updateType = updateType.replace(val+",","");
 					    if(updateType != "") {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getTypeParam(); ?>" + "&"+rel+"=["+updateType+"]";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+updateType+"]";
 					    } else {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getTypeParam(); ?>";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>";
 						}
 					   <?php } ?> 
 			   } else if(rel == "brand") { 
@@ -86,9 +66,9 @@
 					   var updateBrand = "<?php echo str_replace(array('[',']'),'',$_GET["brand"]); ?>";
 					   updateBrand = updateBrand.replace(val+",","");
 					    if(updateBrand != "") {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getBrandsParam(); ?>" + "&"+rel+"=["+updateBrand+"]";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+updateBrand+"]";
 					    } else {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getBrandsParam(); ?>";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>";
 						}
 					   <?php } ?> 
 			   }  else if(rel == "year") { 
@@ -96,9 +76,9 @@
 					   var updateYear = "<?php echo str_replace(array('[',']'),'',$_GET["year"]); ?>";
 					   updateYear = updateYear.replace(val+",","");
 					    if(updateYear != "") {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getYearParam(); ?>" + "&"+rel+"=["+updateYear+"]";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+updateYear+"]";
 					    } else {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getYearParam(); ?>";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>";
 						}
 					   <?php } ?> 
 			   } else if(rel == "sale") { 
@@ -106,9 +86,9 @@
 					   var updateSale = "<?php echo str_replace(array('[',']'),'',$_GET["sale"]); ?>";
 					   updateSale = updateSale.replace(val+",","");
 					    if(updateSale != "") {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getSaleParam(); ?>" + "&"+rel+"=["+updateSale+"]";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+updateSale+"]";
 					    } else {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getSaleParam(); ?>";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>";
 						}
 					   <?php } ?> 
 			   } else if(rel == "poster") { 
@@ -116,9 +96,9 @@
 					   var updatePoster = "<?php echo str_replace(array('[',']'),'',$_GET["poster"]); ?>";
 					   updatePoster = updatePoster.replace(val+",","");
 					    if(updatePoster != "") {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getPosterParam(); ?>" + "&"+rel+"=["+updatePoster+"]";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>" + "&"+rel+"=["+updatePoster+"]";
 					    } else {
-					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"].getPosterParam(); ?>";
+					       window.location.href = "<?php echo Yii::app()->request->baseUrl; ?>/index.php/instrument/search?q=<?php echo $_GET["q"]; ?>";
 						}
 					   <?php } ?> 
 			   }

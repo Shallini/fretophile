@@ -47,15 +47,15 @@
 }
 
 .galleria-carousel .galleria-thumbnails-list {
-    margin-left:47px;
-    margin-right: 47px;
+    margin-left:44px;
+    margin-right: 44px;
 }
 .galleria-thumbnails{
 	/*left:52px; right:52px;*/
 }
 .galleria-thumbnails .galleria-image {
     height: 54px!important;
-    width: 81px!important;
+    width: 80px!important;
     background: #000;
     margin: 0 10px 0 0;
     border: 1px solid #000;
